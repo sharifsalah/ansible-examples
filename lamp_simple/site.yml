@@ -3,21 +3,21 @@
 
 - name: apply common configuration to all nodes
   hosts: all
-  user: root
+  sudo: yes
 
   roles:
     - common
 
 - name: configure and deploy the webservers and application code
   hosts: webservers
-  user: root
+  sudo: yes
 
   roles:
     - web
 
 - name: deploy MySQL and configure the databases
   hosts: dbservers
-  user: root
+  sudo: yes
 
   roles:
     - db
