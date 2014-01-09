@@ -1,0 +1,37 @@
+- name: Create new GCE instances
+  hosts: localhost
+  gather_facts: no
+  vars:
+    names: node1,node2
+    type: f1-micro
+    image: centos-6 
+    zone: europe-west1-b
+  tasks:
+    - name: Create instances
+      local_action: 
+	  	module: gce 
+		instance_names={{ names }} 
+		machine_type={{ type }} 
+		image={{ image }} 
+		zone={{ zone }}
+      register: gce
+    - name: Wait until SSH is available
+      local_action: 
+	  	module: wait_for 
+	  	host={{ item.public_ip }} 
+	  	port=22 
+		delay=15 
+		timeout=30 
+		state=started
+      with_items: gce.instance_data
+
+- name: Open port 80 to allow Apache 
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Allow HTTP
+      local_action: 
+        module: gce_net
+        name: default
+        allowed: tcp:80
+        fwname: all-http
