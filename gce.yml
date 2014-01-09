@@ -10,18 +10,18 @@
     - name: Create instances
       local_action: 
         module: gce 
-        instance_names: {{ names }} 
-        machine_type: {{ type }} 
-        image: {{ image }} 
-        zone: {{ zone }}
+        instance_names: '{{ names }}'
+        machine_type: '{{ type }}'
+        image: '{{ image }}'
+        zone: '{{ zone }}'
       register: gce
     - name: Wait until SSH is available
       local_action: 
         module: wait_for 
-        host: {{ item.public_ip }} 
-        port: 22 
-        delay: 15 
-        timeout: 30 
+        host: '{{ item.public_ip }}'
+        port: 22
+        delay: 15
+        timeout: 30
         state: started
       with_items: gce.instance_data
 
