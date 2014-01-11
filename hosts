@@ -1,0 +1,5 @@
+[localhost]
+127.0.0.1
+[gce-instances]
+node1
+node2
