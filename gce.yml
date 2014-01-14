@@ -15,15 +15,6 @@
         image: '{{ image }}'
         zone: '{{ zone }}'
       register: gce
-    - name: Wait until SSH is available
-      local_action: 
-        module: wait_for 
-        host: '{{ item.public_ip }}'
-        port: 22
-        delay: 15
-        timeout: 30
-        state: started
-      with_items: gce.instance_data
 
 - name: Open port 80 to allow Apache 
   hosts: localhost
