@@ -1,3 +1,5 @@
+NOTE: This Hadoop sample has not been adapted to run on Google Compute Engine.
+
 # Deploying Hadoop Clusters using Ansible
 
 ## Preface
